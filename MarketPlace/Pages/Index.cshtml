@@ -6,20 +6,56 @@
 
 <div class="text-center">
     <h1 class="display-4">Products for Sale</h1>
-    @foreach (var product in Model.Products)
-    {
-            <hr />
-            <h3>Name: @product.Name</h3>
-            <h2>Price: @product.Price</h2>
-            <h2>Amount: @product.Amount</h2>
-        if (product.Category == null)
-        {
-            <h2>Category: None</h2>
-        }
-        else
-        {
-            <h2>Category: @product.Category.Name</h2>
-        }
-            <h2>Owner: @product.RegisteredUser.UserName</h2>
-    }
+    <hr />
+    <form asp-page="/Index" method="get" class="d-inline-block">
+        <input type="hidden" name="categoryId" value="@Model.CategoryId" />
+        <input type="hidden" name="ascSort" value="true" />
+        <button type="submit" class="btn btn-dark">Sort by Price ascending ↑</button>
+    </form>
+    <form asp-page="/Index" method="get" class="d-inline-block">
+        <input type="hidden" name="categoryId" value="@Model.CategoryId" />
+        <input type="hidden" name="descSort" value="true" />
+        <button type="submit" class="btn btn-dark">Sort by Price descending ↓</button>
+    </form>
 </div>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Stock Amount</th>
+            <th>Category</th>
+            <th>Seller</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>
+                    @product.Name
+                </td>
+                <td>
+                    @product.Price $
+                </td>
+                <td>
+                    @product.Amount
+                </td>
+
+                @if (@product.Category == null)
+                {
+                    <td>None</td>
+                }
+                else
+                {
+                    <td>@product.Category.Name</td>
+                }
+                <td>
+                    @product.RegisteredUser.UserName
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

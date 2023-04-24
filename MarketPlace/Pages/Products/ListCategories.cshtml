@@ -1,0 +1,43 @@
+﻿@page
+@model MarketPlace.Pages.Products.ListCategoriesModel
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<h1 class="display-4 text-center">Categories</h1>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Category Name
+            </th>
+            <th>Products in Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var category in Model.Categories) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => category.Name)
+            </td>
+            <td>
+                @category.Products.Count
+            </td>
+            <td>
+                <form asp-page="/Index" method="get" class="d-inline-block">
+                    <input type="hidden" name="categoryId" value="@category.Id" />
+                    <button type="submit" class="btn btn-secondary">Show @category.Name Products</button>
+                </form>
+                <form asp-page="/Products/DeleteCategory" method="post" class="d-inline-block">
+                    <input type="hidden" name="categoryId" value="@category.Id" />
+                    <button type="submit" class="btn btn-danger">Delete @category.Name category</button>
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
