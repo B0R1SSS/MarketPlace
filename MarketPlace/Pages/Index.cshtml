@@ -1,0 +1,25 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Products for Sale</h1>
+    @foreach (var product in Model.Products)
+    {
+            <hr />
+            <h3>Name: @product.Name</h3>
+            <h2>Price: @product.Price</h2>
+            <h2>Amount: @product.Amount</h2>
+        if (product.Category == null)
+        {
+            <h2>Category: None</h2>
+        }
+        else
+        {
+            <h2>Category: @product.Category.Name</h2>
+        }
+            <h2>Owner: @product.RegisteredUser.UserName</h2>
+    }
+</div>
