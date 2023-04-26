@@ -1,0 +1,63 @@
+﻿@page
+@model MarketPlace.Pages.Products.ProductPageModel
+
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<MarketPlace.Models.RegisteredUser> UserManager
+
+@{
+    ViewData["Title"] = "Product Page";
+}
+
+<h1>@Model.Product.Name</h1>
+
+<div>
+    <h5>Details</h5>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.Amount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.Amount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.Product.Category?.Name ?? "None")
+        </dd>
+        <dt class="col-sm-2">
+            Seller
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.RegisteredUser.UserName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <form asp-page="/Products/BuyProduct" method="post" class="d-inline-block">
+                    <input type="hidden" name="productId" value="@Model.Product.Id" />
+                    <input type="hidden" name="buyerId" value="@((await UserManager.GetUserAsync(User)).Id)" />
+                    <input type="number" min="1" max="@Model.Product.Amount" name="amount" placeholder="Amount"/>
+                    <button type="submit" class="btn btn-secondary">Buy Product</button>
+    </form>
+    <a asp-page="./Index">Back to List</a>
+</div>
