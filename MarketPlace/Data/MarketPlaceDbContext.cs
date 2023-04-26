@@ -20,15 +20,15 @@ namespace MarketPlace.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Product>()
-                        .HasOne(x => x.RegisteredUser)
-                        .WithMany(x => x.SellingProducts)
-                        .HasForeignKey(x => x.RegisteredUserId)
+                        .HasOne(product => product.RegisteredUser)
+                        .WithMany(user => user.SellingProducts)
+                        .HasForeignKey(product => product.RegisteredUserId)
                         .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Product>()
-                        .HasOne(x => x.Category)
-                        .WithMany(x => x.Products)
-                        .HasForeignKey(x => x.CategoryId)
+                        .HasOne(product => product.Category)
+                        .WithMany(category => category.Products)
+                        .HasForeignKey(product => product.CategoryId)
                         .IsRequired(false)
 						.OnDelete(DeleteBehavior.SetNull);
         }

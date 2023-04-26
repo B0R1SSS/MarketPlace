@@ -36,7 +36,7 @@ namespace MarketPlace.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("MarketPlace.Models.Product", b =>
@@ -74,7 +74,7 @@ namespace MarketPlace.Migrations
 
                     b.HasIndex("RegisteredUserId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("MarketPlace.Models.RegisteredUser", b =>

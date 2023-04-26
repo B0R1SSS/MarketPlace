@@ -34,7 +34,8 @@ namespace MarketPlace.Pages.Products
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if(!ModelState.IsValid)
+            Categories = new SelectList(_dbContext.Categories, "Id", "Name");
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
@@ -71,7 +72,7 @@ namespace MarketPlace.Pages.Products
             public int Amount { get; set; }
 
             [DisplayName("Category")]
-            public int CategoryId { get; set; }
+            public int? CategoryId { get; set; }
         }
     }
 }

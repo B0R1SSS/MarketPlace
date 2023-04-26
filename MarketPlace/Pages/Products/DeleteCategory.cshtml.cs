@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MarketPlace.Data;
 using MarketPlace.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MarketPlace.Pages.Products
 {
+    [Authorize]
     public class DeleteCategoryModel : PageModel
     {
         private readonly MarketPlaceDbContext _dbContext;
