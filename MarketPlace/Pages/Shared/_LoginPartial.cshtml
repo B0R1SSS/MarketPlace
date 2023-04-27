@@ -1,17 +1,27 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using MarketPlace.Models
+@using MarketPlace.Data
 
 @inject SignInManager<RegisteredUser> SignInManager
 @inject UserManager<RegisteredUser> UserManager
+@inject MarketPlaceDbContext DbContext;
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+    //var watchlistCount = DbContext.UsersProductsWatchlist.Where(p => p.RegisteredUserId == user.Id).Count();
+}
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
-{
+{   
     <li class="nav-item">
         <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Signed in as @UserManager.GetUserName(User)</a>
     </li>
     <li class="nav-item">
-          <div class="nav-link text-dark">Balance: @(Math.Round((await UserManager.GetUserAsync(User)).Balance, 2))$</div>
+            <a class="nav-link text-dark" asp-area="" asp-page="/Index" asp-route-userId="@user.Id">Watchlist(@DbContext.UsersProductsWatchlist.Where(p => p.RegisteredUserId == user.Id).Count())</a>
+    </li>
+    <li class="nav-item">
+          <div class="nav-link text-dark">Balance: @(Math.Round(user.Balance, 2))$</div>
     </li>
     <li class="nav-item">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">

@@ -15,5 +15,8 @@ namespace MarketPlace.Models
 
         public string RegisteredUserId { get; set; }
         public RegisteredUser RegisteredUser { get; set; }
+
+        public IList<RegisteredUser> WatchlistUsers { get; set; }
+        public IList<UserProductWatchlist> UserProductWatchlist { get; set; }
     }
 }

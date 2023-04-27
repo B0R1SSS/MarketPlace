@@ -5,15 +5,17 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Products for Sale</h1>
+    <h1 class="display-4">@Model.Heading</h1>
     <hr />
     <form asp-page="/Index" method="get" class="d-inline-block">
         <input type="hidden" name="categoryId" value="@Model.CategoryId" />
+        <input type="hidden" name="userId" value="@Model.UserId" />
         <input type="hidden" name="ascSort" value="true" />
         <button type="submit" class="btn btn-dark">Sort by Price ascending ↑</button>
     </form>
     <form asp-page="/Index" method="get" class="d-inline-block">
         <input type="hidden" name="categoryId" value="@Model.CategoryId" />
+        <input type="hidden" name="userId" value="@Model.UserId" />
         <input type="hidden" name="descSort" value="true" />
         <button type="submit" class="btn btn-dark">Sort by Price descending ↓</button>
     </form>
@@ -53,7 +55,7 @@
                     <td>@product.Category.Name</td>
                 }
                 <td>
-                    @product.RegisteredUser.UserName
+                    @product.RegisteredUser?.UserName
                 </td>
             </tr>
         }

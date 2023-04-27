@@ -14,6 +14,7 @@ namespace MarketPlace.Data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<UserProductWatchlist> UsersProductsWatchlist { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,7 +24,7 @@ namespace MarketPlace.Data
                         .HasOne(product => product.RegisteredUser)
                         .WithMany(user => user.SellingProducts)
                         .HasForeignKey(product => product.RegisteredUserId)
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Product>()
                         .HasOne(product => product.Category)
@@ -31,6 +32,14 @@ namespace MarketPlace.Data
                         .HasForeignKey(product => product.CategoryId)
                         .IsRequired(false)
 						.OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<UserProductWatchlist>()
+                .HasKey(w => new { w.RegisteredUserId, w.ProductId });
+
+            modelBuilder.Entity<RegisteredUser>()
+                .HasMany(user => user.WatchlistProducts)
+                .WithMany(product => product.WatchlistUsers)
+                .UsingEntity<UserProductWatchlist>();
         }
     }
 }

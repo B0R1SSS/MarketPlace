@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MarketPlace.Data;
 using MarketPlace.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace MarketPlace.Pages.Products
 {
@@ -15,13 +16,17 @@ namespace MarketPlace.Pages.Products
     public class ProductPageModel : PageModel
     {
         private readonly MarketPlaceDbContext _dbContext;
+        private readonly UserManager<RegisteredUser> _userManager;
 
-        public ProductPageModel(MarketPlaceDbContext context)
+
+        public ProductPageModel(MarketPlaceDbContext dbContext, UserManager<RegisteredUser> userManager)
         {
-            _dbContext = context;
+            _dbContext = dbContext;
+            _userManager = userManager;
         }
 
-      public Product Product { get; set; } = default!; 
+        public Product Product { get; set; } = default!; 
+        public bool IsInWatchlist { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? productId)
         {
@@ -39,6 +44,8 @@ namespace MarketPlace.Pages.Products
                 return RedirectToPage("/Index");
             }
             Product = product;
+            var user = await _userManager.GetUserAsync(User);
+            IsInWatchlist = await _dbContext.UsersProductsWatchlist.FindAsync(user.Id, productId) != null;
             return Page();
         }
     }
