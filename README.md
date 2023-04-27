@@ -20,3 +20,11 @@ This is a web application for simulating MarketPlace and served as my introducti
 - Listing categories
 - Sorting of listed products
 - Balance transactions between buyers and sellers
+
+## Showcase
+![](showcase_images/login_image.JPG)
+![](showcase_images/list_products_image.JPG)
+![](showcase_images/profile_image.JPG)
+![](showcase_images/sell_product_image.JPG)
+![](showcase_images/list_categories_image.JPG)
+![](showcase_images/product_page_image.JPG)
